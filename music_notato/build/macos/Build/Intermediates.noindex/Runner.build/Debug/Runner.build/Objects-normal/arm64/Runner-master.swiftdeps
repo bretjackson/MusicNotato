@@ -1,8 +1,0 @@
-version: "Apple Swift version 5.6.1 (swiftlang-5.6.0.323.66 clang-1316.0.20.12)"
-options: "9a1a92567da5ba281853eeb8aa848932366c22d4c906cd6a3183548b7eafb970"
-build_start_time: [1663774389, 747153043]
-build_end_time: [1663774393, 189519882]
-inputs:
-  "/Users/olivialaske/Desktop/GitHub/Class/COMP225/MusicNotato/music_notato/macos/Flutter/GeneratedPluginRegistrant.swift": [1663774376, 735892772]
-  "/Users/olivialaske/Desktop/GitHub/Class/COMP225/MusicNotato/music_notato/macos/Runner/AppDelegate.swift": [1663162298, 0]
-  "/Users/olivialaske/Desktop/GitHub/Class/COMP225/MusicNotato/music_notato/macos/Runner/MainFlutterWindow.swift": [1663162298, 0]
