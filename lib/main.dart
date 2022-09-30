@@ -60,6 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+  
+  void _addA() {
+    setState(() {
+      
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +103,18 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+             ),
+             Text(
+               '$_counter',
+               style: Theme.of(context).textTheme.headline4,
+             ),
+             const Text(
+               'Text',
+             ),
+            TextButton(
+              onPressed: _incrementCounter,
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+              child: const Text('A'),
             ),
           ],
         ),
@@ -109,7 +123,8 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
+
