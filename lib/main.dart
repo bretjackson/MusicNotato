@@ -4,6 +4,40 @@ void main() {
   runApp(const MyApp());
 }
 
+class StaffLine extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
+    
+    canvas.drawLine(Offset(0, size.height*0.3), Offset(size.width, size.height*0.3), paint);
+    canvas.drawLine(Offset(0, size.height*0.4), Offset(size.width, size.height*0.4), paint);
+    canvas.drawLine(Offset(0, size.height*0.5), Offset(size.width, size.height*0.5), paint);
+    canvas.drawLine(Offset(0, size.height*0.6), Offset(size.width, size.height*0.6), paint);
+    canvas.drawLine(Offset(0, size.height*0.7), Offset(size.width, size.height*0.7), paint);
+  }
+  
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    throw UnimplementedError();
+  }
+}
+
+class D extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
+    double radius = 4;
+    
+    canvas.drawCircle(Offset(0,size.height), radius, paint);
+    canvas.drawLine(Offset(radius,size.height),Offset(radius,size.height*0.5),paint);
+  }
+  
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    throw UnimplementedError();
+  }
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -48,7 +82,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+//   int _counter = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -57,15 +91,30 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+//       _counter++;
     });
   }
   
-  void _addA() {
+  void _addC() {
     setState(() {
       
     });
   }
+  
+  void _addCSharp() {
+    setState(() {
+      
+    });
+  }
+  
+//   void _addD() {
+//     setState(() {
+//       CustomPaint(
+//         size: Size(50,50),
+//         painter: D(),
+//       );
+//     });
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -101,30 +150,114 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-             ),
-             Text(
-               '$_counter',
-               style: Theme.of(context).textTheme.headline4,
-             ),
-             const Text(
-               'Text',
-             ),
-            TextButton(
-              onPressed: _incrementCounter,
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-              child: const Text('A'),
+//             const Text(
+//               'You have pushed the button this many times:',
+//              ),
+//              Text(
+//                '$_counter',
+//                style: Theme.of(context).textTheme.headline4,
+//              ),
+//              const Text(
+//                'Text',
+//              ),
+//             ElevatedButton(
+//               onPressed: _incrementCounter,
+//               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+//               child: const Text('A'),
+//             ),
+              CustomPaint(
+                size: Size(1000, 50),
+                // size: Size(context.size!.width, context.size!.height), // does not work; compile error
+                painter: StaffLine(),
+              ),
+//               CustomPaint(
+//                 size: Size(50,50),
+//                 painter: D(),
+//               ),
+            ButtonBar(
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('C'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('C#/Db'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    CustomPaint(
+                      size: Size(50,50),
+                      painter: D(),
+                    );
+//                     _addD();
+//                     var exampleD = D();
+                  },
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('D'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('D#/Eb'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('E'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('F'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('F#/Gb'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('G'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('G#/Ab'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('A'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('A#/Bb'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('B'),
+                ),
+                ElevatedButton(
+                  onPressed: _incrementCounter,
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  child: const Text('♩'),
+                ),
+              ]
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-       ), // This trailing comma makes auto-formatting nicer for build methods.
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: _incrementCounter,
+//         tooltip: 'Increment',
+//         child: const Icon(Icons.add),
+//        ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
-
