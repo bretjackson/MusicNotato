@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -83,7 +84,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 //   int _counter = 0;
-
+//   final player = AudioPlayer();
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -192,6 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       size: Size(50,50),
                       painter: D(),
                     );
+//                     () => player.play(AssetSource('1.mp3'));
 //                     _addD();
 //                     var exampleD = D();
                   },
