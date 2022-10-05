@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -84,17 +84,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 //   int _counter = 0;
-//   final player = AudioPlayer();
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-//       _counter++;
-    });
-  }
+  final player = AudioPlayer();
+//   void _incrementCounter() {
+//     setState(() {
+//       // This call to setState tells the Flutter framework that something has
+//       // changed in this State, which causes it to rerun the build method below
+//       // so that the display can reflect the updated values. If we changed
+//       // _counter without calling setState(), then the build method would not be
+//       // called again, and so nothing would appear to happen.
+// //       _counter++;
+//     });
+//   }
   
   void _addC() {
     setState(() {
@@ -178,22 +178,22 @@ class _MyHomePageState extends State<MyHomePage> {
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {},
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('C'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {},
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('C#/Db'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    CustomPaint(
-                      size: Size(50,50),
-                      painter: D(),
-                    );
-//                     () => player.play(AssetSource('1.mp3'));
+                    // CustomPaint(
+                    //   size: Size(50,50),
+                    //   painter: D(),
+                    // );
+                    player.play(AssetSource('1.mp3'));
 //                     _addD();
 //                     var exampleD = D();
                   },
@@ -201,52 +201,52 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('D'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('D#/Eb'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('E'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('F'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('F#/Gb'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('G'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('G#/Ab'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('A'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('A#/Bb'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('B'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () => player.play(AssetSource('1.mp3')),
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('♩'),
                 ),
