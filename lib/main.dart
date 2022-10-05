@@ -96,26 +96,26 @@ class _MyHomePageState extends State<MyHomePage> {
 //     });
 //   }
   
-  void _addC() {
-    setState(() {
+  // void _addC() {
+  //   setState(() {
       
-    });
-  }
+  //   });
+  // }
   
-  void _addCSharp() {
-    setState(() {
+  // void _addCSharp() {
+  //   setState(() {
       
-    });
-  }
+  //   });
+  // }
   
-//   void _addD() {
-//     setState(() {
-//       CustomPaint(
-//         size: Size(50,50),
-//         painter: D(),
-//       );
-//     });
-//   }
+  // void _addD() {
+  //   setState(() {
+  //     CustomPaint(
+  //       size: Size(50,50),
+  //       painter: D(),
+  //     );
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
 //               child: const Text('A'),
 //             ),
               CustomPaint(
-                size: Size(1000, 50),
+                size: const Size(1000, 50),
                 // size: Size(context.size!.width, context.size!.height), // does not work; compile error
                 painter: StaffLine(),
               ),
@@ -194,7 +194,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     //   painter: D(),
                     // );
                     player.play(AssetSource('1.mp3'));
-//                     _addD();
+                    // _addD();
+                    var image = Image.asset('/assets/images/quarter.png');
 //                     var exampleD = D();
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
