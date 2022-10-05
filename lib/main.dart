@@ -180,14 +180,14 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('C'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('C#/Db'),
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     //   size: Size(50,50),
                     //   painter: D(),
                     // );
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                     // _addD();
                     // var image = Image.asset('/assets/images/quarter.png');
                     // CustomPaint(
@@ -212,70 +212,70 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('D#/Eb'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('E'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('F'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('F#/Gb'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('G'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('G#/Ab'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('A'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('A#/Bb'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('B'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('1.mp3'));
+                    player.play(AssetSource('audio/1.mp3'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('♩'),
