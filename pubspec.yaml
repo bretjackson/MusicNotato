@@ -29,7 +29,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  audioplayers: ^1.1.0
   flutter:
     sdk: flutter
 
@@ -91,4 +90,5 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
-    - assets/1.mp3
+    - assets/audio/1.mp3
+    - assets/images/quarter.png
