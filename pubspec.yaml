@@ -92,4 +92,10 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
     - assets/audio/1.mp3
+    - assets/audio/c.wav
+    - assets/audio/c#.wav
+    - assets/audio/d.wav
+    - assets/audio/d#.wav
+    - assets/audio/e.wav
     - assets/images/quarter.png
+  

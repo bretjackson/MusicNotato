@@ -180,14 +180,14 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
+                    player.play(AssetSource('audio/c.wav'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('C'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
+                    player.play(AssetSource('audio/c#.wav'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('C#/Db'),
@@ -198,7 +198,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     //   size: Size(50,50),
                     //   painter: D(),
                     // );
-                    player.play(AssetSource('audio/1.mp3'));
+                    player.play(AssetSource('audio/d.wav'));
                     // _addD();
                     // var image = Image.asset('/assets/images/quarter.png');
                     // CustomPaint(
@@ -212,14 +212,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
+                    player.play(AssetSource('audio/d#.wav'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('D#/Eb'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
+                    player.play(AssetSource('audio/e.wav'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('E'),
