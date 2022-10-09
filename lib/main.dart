@@ -283,7 +283,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    player.play(AssetSource('audio/gs.mp3'));
+                    player.play(AssetSource('audio/gs.wav'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('G#/Ab'),
