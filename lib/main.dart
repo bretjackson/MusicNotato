@@ -1,7 +1,44 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+class Graphics extends CustomPainter {
+  bool note;
+
+  Graphics(this.note);
+
+  void addNote() {
+
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
+    
+    canvas.drawLine(Offset(0, size.height*0.3), Offset(size.width, size.height*0.3), paint);
+    canvas.drawLine(Offset(0, size.height*0.4), Offset(size.width, size.height*0.4), paint);
+    canvas.drawLine(Offset(0, size.height*0.5), Offset(size.width, size.height*0.5), paint);
+    canvas.drawLine(Offset(0, size.height*0.6), Offset(size.width, size.height*0.6), paint);
+    canvas.drawLine(Offset(0, size.height*0.7), Offset(size.width, size.height*0.7), paint);
+
+    if(note == true) {
+      var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
+      double radius = 4;
+    
+      canvas.drawCircle(Offset(0,size.height), radius, paint);
+      canvas.drawLine(Offset(radius,size.height),Offset(radius,size.height*0.5),paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
+  }
 }
 
 class StaffLine extends CustomPainter {
@@ -18,11 +55,15 @@ class StaffLine extends CustomPainter {
   
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    throw UnimplementedError();
+    return true;
   }
 }
 
 class D extends CustomPainter {
+  Offset location;
+
+  D(this.location);
+
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
@@ -82,18 +123,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+    bool note = false;
 //   int _counter = 0;
+    final player = AudioPlayer();
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-//       _counter++;
-    });
-  }
+    // var note = CustomPaint(
+    //   size: Size(50,50),
+    //   painter: D(Offset(0,0)),
+    // );
+
+    void _addNote() {
+      setState(() {
+        note = true;
+      });
+    }
+//   void _incrementCounter() {
+//     setState(() {
+//       // This call to setState tells the Flutter framework that something has
+//       // changed in this State, which causes it to rerun the build method below
+//       // so that the display can reflect the updated values. If we changed
+//       // _counter without calling setState(), then the build method would not be
+//       // called again, and so nothing would appear to happen.
+// //       _counter++;
+//     });
+//   }
   
   // void _addC() {
   //   setState(() {
@@ -160,98 +213,106 @@ class _MyHomePageState extends State<MyHomePage> {
 //              const Text(
 //                'Text',
 //              ),
-//             ElevatedButton(
-//               onPressed: _incrementCounter,
-//               style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-//               child: const Text('A'),
-//             ),
               CustomPaint(
                 size: const Size(1000, 50),
                 // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-                painter: StaffLine(),
+                painter: Graphics(note),
               ),
-//               CustomPaint(
-//                 size: Size(50,50),
-//                 painter: D(),
-//               ),
+              // CustomPaint(
+              //   size: Size(50,50),
+              //   painter: D(),
+              // ),
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/c.wav'));
+                    _addNote;
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('C'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/c#.wav'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('C#/Db'),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // CustomPaint(
-                    //   size: Size(50,50),
-                    //   painter: D(),
-                    // );
-                    player.play(AssetSource('1.mp3'));
-                    // _addD();
-                    var image = Image.asset('/assets/images/quarter.png');
-                    CustomPaint(
-                      size: Size(50,50),
-                      painter: D(),
-                    );
-//                     _addD();
-//                     var exampleD = D();
+                    player.play(AssetSource('audio/d.wav'));
                   },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('D'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/d#.wav'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('D#/Eb'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/e.wav'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('E'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/1.mp3'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('F'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/1.mp3'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('F#/Gb'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/1.mp3'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('G'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/1.mp3'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('G#/Ab'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/1.mp3'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('A'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/1.mp3'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('A#/Bb'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/1.mp3'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('B'),
                 ),
                 ElevatedButton(
-                  onPressed: _incrementCounter,
+                  onPressed: () {
+                    player.play(AssetSource('audio/1.mp3'));
+                  },
                   style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
                   child: const Text('♩'),
                 ),
