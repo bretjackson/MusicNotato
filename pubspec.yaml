@@ -91,11 +91,17 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
-    - assets/audio/1.mp3
     - assets/audio/c.wav
-    - assets/audio/c#.wav
+    - assets/audio/cs.wav
     - assets/audio/d.wav
-    - assets/audio/d#.wav
+    - assets/audio/ds.wav
     - assets/audio/e.wav
+    - assets/audio/f.wav 
+    - assets/audio/fs.wav
+    - assets/audio/g.wav
+    - assets/audio/gs.wav
+    - assets/audio/a.wav
+    - assets/audio/as.wav
+    - assets/audio/b.wav
     - assets/images/quarter.png
   
