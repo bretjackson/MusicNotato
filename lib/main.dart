@@ -1,10 +1,75 @@
-import 'dart:html';
+import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'note.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+List<Note> _allNotes = List.empty(growable: true);
+
+class Save {
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/notato.txt');
+  }
+
+  Future<List<Note>> readFile() async {
+    try {
+      final file = await _localFile;
+      final String notesFromFile = await file.readAsString();
+      return strToNoteList(notesFromFile);
+    } catch (e) {
+      return List.empty(growable: true);
+    }
+  }
+
+  Future<File> writeFile() async {
+    final file = await _localFile;
+    return file.writeAsString(noteListToStr(_allNotes));
+  }
+
+  List<Note> strToNoteList(String fileText) {
+    List<Note> toReturn = List.empty(growable: false);
+    //TODO: Regex? This should just grab bits of text before a semicolon
+    var unparsedRead = fileText.split('');
+    String chunk = '';
+    for (String char in unparsedRead) {
+      if (char != ';') {
+        chunk = '$chunk$char';
+      } else {
+        var noteParts = chunk.split('');
+        chunk = '';
+        //TODO: Make it so this won't break if the number of characters isn't constant
+        toReturn.add(Note(
+          noteParts[0],
+          int.parse(noteParts[1]),
+          int.parse(noteParts[2]),
+          int.parse(noteParts[3]),
+        ));
+      }
+    }
+    return toReturn;
+  }
+
+  String noteListToStr(List<Note> noteList) {
+    String toReturn = '';
+    for (Note note in noteList) {
+      toReturn =
+          '$toReturn${note.note}${note.octave}${note.duration}${note.accidental};';
+    }
+    return toReturn;
+  }
 }
 
 class Graphics extends CustomPainter {
@@ -12,26 +77,34 @@ class Graphics extends CustomPainter {
 
   Graphics(this.note);
 
-  void addNote() {
-
-  }
+  void addNote() {}
 
   @override
   void paint(Canvas canvas, Size size) {
-    var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
-    
-    canvas.drawLine(Offset(0, size.height*0.3), Offset(size.width, size.height*0.3), paint);
-    canvas.drawLine(Offset(0, size.height*0.4), Offset(size.width, size.height*0.4), paint);
-    canvas.drawLine(Offset(0, size.height*0.5), Offset(size.width, size.height*0.5), paint);
-    canvas.drawLine(Offset(0, size.height*0.6), Offset(size.width, size.height*0.6), paint);
-    canvas.drawLine(Offset(0, size.height*0.7), Offset(size.width, size.height*0.7), paint);
+    var paint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 1.0;
 
-    if(note == true) {
-      var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
+    canvas.drawLine(Offset(0, size.height * 0.3),
+        Offset(size.width, size.height * 0.3), paint);
+    canvas.drawLine(Offset(0, size.height * 0.4),
+        Offset(size.width, size.height * 0.4), paint);
+    canvas.drawLine(Offset(0, size.height * 0.5),
+        Offset(size.width, size.height * 0.5), paint);
+    canvas.drawLine(Offset(0, size.height * 0.6),
+        Offset(size.width, size.height * 0.6), paint);
+    canvas.drawLine(Offset(0, size.height * 0.7),
+        Offset(size.width, size.height * 0.7), paint);
+
+    if (note == true) {
+      var paint = Paint()
+        ..color = Colors.black
+        ..strokeWidth = 1.0;
       double radius = 4;
-    
-      canvas.drawCircle(Offset(0,size.height), radius, paint);
-      canvas.drawLine(Offset(radius,size.height),Offset(radius,size.height*0.5),paint);
+
+      canvas.drawCircle(Offset(0, size.height), radius, paint);
+      canvas.drawLine(Offset(radius, size.height),
+          Offset(radius, size.height * 0.5), paint);
     }
   }
 
@@ -44,15 +117,22 @@ class Graphics extends CustomPainter {
 class StaffLine extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
-    
-    canvas.drawLine(Offset(0, size.height*0.3), Offset(size.width, size.height*0.3), paint);
-    canvas.drawLine(Offset(0, size.height*0.4), Offset(size.width, size.height*0.4), paint);
-    canvas.drawLine(Offset(0, size.height*0.5), Offset(size.width, size.height*0.5), paint);
-    canvas.drawLine(Offset(0, size.height*0.6), Offset(size.width, size.height*0.6), paint);
-    canvas.drawLine(Offset(0, size.height*0.7), Offset(size.width, size.height*0.7), paint);
+    var paint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 1.0;
+
+    canvas.drawLine(Offset(0, size.height * 0.3),
+        Offset(size.width, size.height * 0.3), paint);
+    canvas.drawLine(Offset(0, size.height * 0.4),
+        Offset(size.width, size.height * 0.4), paint);
+    canvas.drawLine(Offset(0, size.height * 0.5),
+        Offset(size.width, size.height * 0.5), paint);
+    canvas.drawLine(Offset(0, size.height * 0.6),
+        Offset(size.width, size.height * 0.6), paint);
+    canvas.drawLine(Offset(0, size.height * 0.7),
+        Offset(size.width, size.height * 0.7), paint);
   }
-  
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
@@ -66,13 +146,16 @@ class D extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
+    var paint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 1.0;
     double radius = 4;
-    
-    canvas.drawCircle(Offset(0,size.height), radius, paint);
-    canvas.drawLine(Offset(radius,size.height),Offset(radius,size.height*0.5),paint);
+
+    canvas.drawCircle(Offset(0, size.height), radius, paint);
+    canvas.drawLine(
+        Offset(radius, size.height), Offset(radius, size.height * 0.5), paint);
   }
-  
+
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     throw UnimplementedError();
@@ -99,13 +182,14 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Music Notato'),
+      home: MyHomePage(title: 'Music Notato', storage: Save()),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.storage});
+  final Save storage;
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -123,20 +207,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-    bool note = false;
+  bool note = false;
 //   int _counter = 0;
-    final player = AudioPlayer();
+  final player = AudioPlayer();
 
-    // var note = CustomPaint(
-    //   size: Size(50,50),
-    //   painter: D(Offset(0,0)),
-    // );
+  // var note = CustomPaint(
+  //   size: Size(50,50),
+  //   painter: D(Offset(0,0)),
+  // );
 
-    void _addNote() {
+  @override
+  void initState() {
+    super.initState();
+    widget.storage.readFile().then((value) {
       setState(() {
-        note = true;
+        _allNotes = value;
       });
-    }
+    });
+  }
+
+  void _addNote(Note toAdd) {
+    setState(() {
+      note = true;
+      _allNotes.add(toAdd);
+    });
+  }
 //   void _incrementCounter() {
 //     setState(() {
 //       // This call to setState tells the Flutter framework that something has
@@ -147,19 +242,19 @@ class _MyHomePageState extends State<MyHomePage> {
 // //       _counter++;
 //     });
 //   }
-  
+
   // void _addC() {
   //   setState(() {
-      
+
   //   });
   // }
-  
+
   // void _addCSharp() {
   //   setState(() {
-      
+
   //   });
   // }
-  
+
   // void _addD() {
   //   setState(() {
   //     CustomPaint(
@@ -213,111 +308,133 @@ class _MyHomePageState extends State<MyHomePage> {
 //              const Text(
 //                'Text',
 //              ),
-              CustomPaint(
-                size: const Size(1000, 50),
-                // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-                painter: Graphics(note),
-              ),
-              // CustomPaint(
-              //   size: Size(50,50),
-              //   painter: D(),
-              // ),
-            ButtonBar(
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/c.wav'));
-                    _addNote;
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('C'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/c#.wav'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('C#/Db'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/d.wav'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('D'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/d#.wav'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('D#/Eb'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/e.wav'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('E'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('F'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('F#/Gb'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('G'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('G#/Ab'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('A'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('A#/Bb'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('B'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    player.play(AssetSource('audio/1.mp3'));
-                  },
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.black)),
-                  child: const Text('♩'),
-                ),
-              ]
+            CustomPaint(
+              size: const Size(1000, 50),
+              // size: Size(context.size!.width, context.size!.height), // does not work; compile error
+              painter: Graphics(note),
             ),
+            // CustomPaint(
+            //   size: Size(50,50),
+            //   painter: D(),
+            // ),
+            ButtonBar(children: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/c.wav'));
+                  _addNote(Note('C', 4, 4, 0));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('C'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/c#.wav'));
+                  _addNote(Note('C', 4, 4, 1));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('C#/Db'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/d.wav'));
+                  _addNote(Note('D', 4, 4, 0));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('D'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/d#.wav'));
+                  _addNote(Note('D', 4, 4, 1));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('D#/Eb'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/e.wav'));
+                  _addNote(Note('E', 4, 4, 0));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('E'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/1.mp3'));
+                  _addNote(Note("F", 4, 4, 0));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('F'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/1.mp3'));
+                  _addNote(Note("F", 4, 4, 1));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('F#/Gb'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/1.mp3'));
+                  _addNote(Note("G", 4, 4, 0));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('G'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/1.mp3'));
+                  _addNote(Note("G", 4, 4, 1));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('G#/Ab'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/1.mp3'));
+                  _addNote(Note("A", 5, 4, 0));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('A'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/1.mp3'));
+                  _addNote(Note("A", 5, 4, 1));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('A#/Bb'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/1.mp3'));
+                  _addNote(Note("B", 5, 4, 0));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('B'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  player.play(AssetSource('audio/1.mp3'));
+                },
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('♩'),
+              ),
+            ]),
           ],
         ),
       ),
