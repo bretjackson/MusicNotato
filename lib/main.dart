@@ -217,10 +217,6 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     widget.storage.readFile().then((value) {
       setState(() {
-        noteName = currentNoteString;
-        noteList.add(noteName);
-        notePosition.add(x+15);
-        x+=15;
         _allNotes = value;
       });
     });
@@ -229,8 +225,11 @@ class _MyHomePageState extends State<MyHomePage> {
   void _addNote(Note currentNote) {
     setState(() {
       noteName = currentNote.note;
-      x += 8;
+      noteList.add(noteName);
+      notePosition.add(x+15);
+      x += 15;
       _allNotes.add(currentNote);
+      print(noteList);
     });
   }
 
