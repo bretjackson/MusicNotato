@@ -1,9 +1,76 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'PlayingPage.dart';
+
+import 'package:path_provider/path_provider.dart';
+
+import 'note.dart';
 
 void main() {
   runApp(const MyApp());
+}
+
+List<Note> _allNotes = List.empty(growable: true);
+
+class Save {
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/notato.txt');
+  }
+
+  Future<List<Note>> readFile() async {
+    try {
+      final file = await _localFile;
+      final String notesFromFile = await file.readAsString();
+      return strToNoteList(notesFromFile);
+    } catch (e) {
+      return List.empty(growable: true);
+    }
+  }
+
+  Future<File> writeFile() async {
+    final file = await _localFile;
+    return file.writeAsString(noteListToStr(_allNotes));
+  }
+
+  List<Note> strToNoteList(String fileText) {
+    List<Note> toReturn = List.empty(growable: false);
+    //TODO: Regex? This should just grab bits of text before a semicolon
+    var unparsedRead = fileText.split('');
+    String chunk = '';
+    for (String char in unparsedRead) {
+      if (char != ';') {
+        chunk = '$chunk$char';
+      } else {
+        var noteParts = chunk.split('');
+        chunk = '';
+        //TODO: Make it so this won't break if the number of characters isn't constant
+        toReturn.add(Note(
+          noteParts[0],
+          int.parse(noteParts[1]),
+          int.parse(noteParts[2]),
+          int.parse(noteParts[3]),
+        ));
+      }
+    }
+    return toReturn;
+  }
+
+  String noteListToStr(List<Note> noteList) {
+    String toReturn = '';
+    for (Note note in noteList) {
+      toReturn =
+          '$toReturn${note.note}${note.octave}${note.duration}${note.accidental};';
+    }
+    return toReturn;
+  }
 }
 
 class Graphics extends CustomPainter {
@@ -163,13 +230,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Music Notato'),
+      home: MyHomePage(title: 'Music Notato', storage: Save()),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.storage});
+  final Save storage;
   final String title;
 
   @override
@@ -182,11 +250,22 @@ class _MyHomePageState extends State<MyHomePage> {
   double x = 20;
   final player = AudioPlayer();
 
-  void _addNote(String currentNote) {
+  @override
+  void initState() {
+    super.initState();
+    widget.storage.readFile().then((value) {
+      setState(() {
+        _allNotes = value;
+      });
+    });
+  }
+
+  void _addNote(Note currentNote) {
     setState(() {
       note = true;
-      noteName = currentNote;
+      noteName = currentNote.note;
       x += 8;
+      _allNotes.add(currentNote);
     });
   }
 
@@ -209,7 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/c.wav'));
-                  _addNote('c');
+                  _addNote(Note('c', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -218,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/cs.wav'));
-                  _addNote('cs');
+                  _addNote(Note('c', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -227,7 +306,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/d.wav'));
-                  _addNote('d');
+                  _addNote(Note('d', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -236,7 +315,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/ds.wav'));
-                  _addNote('ds');
+                  _addNote(Note('d', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -245,7 +324,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/e.wav'));
-                  _addNote('e');
+                  _addNote(Note('e', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -254,7 +333,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/f.wav'));
-                  _addNote('f');
+                  _addNote(Note('f', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -263,7 +342,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/fs.wav'));
-                  _addNote('fs');
+                  _addNote(Note('f', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -272,7 +351,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/g.wav'));
-                  _addNote('g');
+                  _addNote(Note('g', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -281,7 +360,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/gs.wav'));
-                  _addNote('gs');
+                  _addNote(Note('g', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -290,7 +369,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/a.wav'));
-                  _addNote('a');
+                  _addNote(Note('a', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -299,7 +378,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/as.wav'));
-                  _addNote('as');
+                  _addNote(Note('a', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -308,7 +387,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/b.wav'));
-                  _addNote('b');
+                  _addNote(Note('b', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
