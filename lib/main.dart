@@ -87,6 +87,7 @@ class Graphics extends CustomPainter {
       ..strokeWidth = 1.0;
     double radius = 3;
 
+    // draws the staff
     canvas.drawLine(Offset(0, size.height * 0.3),
         Offset(size.width, size.height * 0.3), paint);
     canvas.drawLine(Offset(0, size.height * 0.4),
@@ -97,6 +98,18 @@ class Graphics extends CustomPainter {
         Offset(size.width, size.height * 0.6), paint);
     canvas.drawLine(Offset(0, size.height * 0.7),
         Offset(size.width, size.height * 0.7), paint);
+
+    // draws the measure lines
+    canvas.drawLine(
+        Offset(0, size.height * 0.3), Offset(0, size.height * 0.7), paint);
+    canvas.drawLine(Offset(size.width * 0.25, size.height * 0.3),
+        Offset(size.width * 0.25, size.height * 0.7), paint);
+    canvas.drawLine(Offset(size.width * 0.5, size.height * 0.3),
+        Offset(size.width * 0.5, size.height * 0.7), paint);
+    canvas.drawLine(Offset(size.width, size.height * 0.3),
+        Offset(size.width, size.height * 0.7), paint);
+    canvas.drawLine(Offset(size.width * 0.75, size.height * 0.3),
+        Offset(size.width * 0.75, size.height * 0.7), paint);
 
     if (note == true && noteName == 'c') {
       double y = -28; // Current y-direction offset; determines note
