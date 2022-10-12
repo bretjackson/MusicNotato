@@ -74,16 +74,18 @@ class Save {
 
 class Graphics extends CustomPainter {
   bool note;
+  String noteName;
+  double
+      x; // Current x-direction offset; determines positioning of note in the x-direction
 
-  Graphics(this.note);
-
-  void addNote() {}
+  Graphics(this.note, this.noteName, this.x);
 
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
       ..color = Colors.black
       ..strokeWidth = 1.0;
+    double radius = 3;
 
     canvas.drawLine(Offset(0, size.height * 0.3),
         Offset(size.width, size.height * 0.3), paint);
@@ -96,15 +98,79 @@ class Graphics extends CustomPainter {
     canvas.drawLine(Offset(0, size.height * 0.7),
         Offset(size.width, size.height * 0.7), paint);
 
-    if (note == true) {
-      var paint = Paint()
-        ..color = Colors.black
-        ..strokeWidth = 1.0;
-      double radius = 4;
+    if (note == true && noteName == 'c') {
+      double y = -28; // Current y-direction offset; determines note
 
-      canvas.drawCircle(Offset(0, size.height), radius, paint);
-      canvas.drawLine(Offset(radius, size.height),
-          Offset(radius, size.height * 0.5), paint);
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(-radius + x, size.height + y),
+          Offset(-radius + x, size.height * 0.5 - 0.7 * y), paint);
+    } else if (note == true && noteName == 'cs') {
+      double y = -28; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(-radius + x, size.height + y),
+          Offset(-radius + x, size.height * 0.5 - 0.7 * y), paint);
+    } else if (note == true && noteName == 'd') {
+      double y = -30; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(-radius + x, size.height + y),
+          Offset(-radius + x, size.height * 0.5 - 0.5 * y), paint);
+    } else if (note == true && noteName == 'ds') {
+      double y = -30; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(-radius + x, size.height + y),
+          Offset(-radius + x, size.height * 0.5 - 0.5 * y), paint);
+    } else if (note == true && noteName == 'e') {
+      double y = -32; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(-radius + x, size.height + y),
+          Offset(-radius + x, size.height * 0.5 - 0.4 * y), paint);
+    } else if (note == true && noteName == 'f') {
+      double y = -34.5; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(-radius + x, size.height + y),
+          Offset(-radius + x, size.height * 0.5 - 0.3 * y), paint);
+    } else if (note == true && noteName == 'fs') {
+      double y = -34.5; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(-radius + x, size.height + y),
+          Offset(-radius + x, size.height * 0.5 - 0.3 * y), paint);
+    } else if (note == true && noteName == 'g') {
+      // correct
+      double y = -38; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(-radius + x, size.height + y),
+          Offset(-radius + x, size.height * 0.5 - 0.2 * y), paint);
+    } else if (note == true && noteName == 'gs') {
+      double y = -20; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(radius + x, size.height + y),
+          Offset(radius + x, size.height * 0.5 + 0.8 * y), paint);
+    } else if (note == true && noteName == 'a') {
+      double y = -22; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(radius + x, size.height + y),
+          Offset(radius + x, size.height * 0.5 + 0.8 * y), paint);
+    } else if (note == true && noteName == 'as') {
+      double y = -22; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(radius + x, size.height + y),
+          Offset(radius + x, size.height * 0.5 + 0.8 * y), paint);
+    } else if (note == true && noteName == 'b') {
+      double y = -24.5; // Current y-direction offset; determines note
+
+      canvas.drawCircle(Offset(x, size.height + y), radius, paint);
+      canvas.drawLine(Offset(radius + x, size.height + y),
+          Offset(radius + x, size.height * 0.5 + 0.8 * y), paint);
     }
   }
 
@@ -139,29 +205,6 @@ class StaffLine extends CustomPainter {
   }
 }
 
-class D extends CustomPainter {
-  Offset location;
-
-  D(this.location);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()
-      ..color = Colors.black
-      ..strokeWidth = 1.0;
-    double radius = 4;
-
-    canvas.drawCircle(Offset(0, size.height), radius, paint);
-    canvas.drawLine(
-        Offset(radius, size.height), Offset(radius, size.height * 0.5), paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    throw UnimplementedError();
-  }
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -171,15 +214,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Music Notato',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Music Notato', storage: Save()),
@@ -190,16 +224,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title, required this.storage});
   final Save storage;
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -208,13 +232,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool note = false;
-//   int _counter = 0;
+  String noteName = '';
+  double x = 20;
   final player = AudioPlayer();
-
-  // var note = CustomPaint(
-  //   size: Size(50,50),
-  //   painter: D(Offset(0,0)),
-  // );
 
   @override
   void initState() {
@@ -226,102 +246,35 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _addNote(Note toAdd) {
+  void _addNote(Note currentNote) {
     setState(() {
       note = true;
-      _allNotes.add(toAdd);
+      noteName = currentNote.note;
+      x += 8;
+      _allNotes.add(currentNote);
     });
   }
-//   void _incrementCounter() {
-//     setState(() {
-//       // This call to setState tells the Flutter framework that something has
-//       // changed in this State, which causes it to rerun the build method below
-//       // so that the display can reflect the updated values. If we changed
-//       // _counter without calling setState(), then the build method would not be
-//       // called again, and so nothing would appear to happen.
-// //       _counter++;
-//     });
-//   }
-
-  // void _addC() {
-  //   setState(() {
-
-  //   });
-  // }
-
-  // void _addCSharp() {
-  //   setState(() {
-
-  //   });
-  // }
-
-  // void _addD() {
-  //   setState(() {
-  //     CustomPaint(
-  //       size: Size(50,50),
-  //       painter: D(),
-  //     );
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-//             const Text(
-//               'You have pushed the button this many times:',
-//              ),
-//              Text(
-//                '$_counter',
-//                style: Theme.of(context).textTheme.headline4,
-//              ),
-//              const Text(
-//                'Text',
-//              ),
             CustomPaint(
               size: const Size(1000, 50),
               // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-              painter: Graphics(note),
+              painter: Graphics(note, noteName, x),
             ),
-            // CustomPaint(
-            //   size: Size(50,50),
-            //   painter: D(),
-            // ),
             ButtonBar(children: <Widget>[
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/c.wav'));
-                  _addNote(Note('C', 4, 4, 0));
+                  _addNote(Note('c', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -329,8 +282,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/c#.wav'));
-                  _addNote(Note('C', 4, 4, 1));
+                  player.play(AssetSource('audio/cs.wav'));
+                  _addNote(Note('c', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -339,7 +292,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/d.wav'));
-                  _addNote(Note('D', 4, 4, 0));
+                  _addNote(Note('d', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -347,8 +300,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/d#.wav'));
-                  _addNote(Note('D', 4, 4, 1));
+                  player.play(AssetSource('audio/ds.wav'));
+                  _addNote(Note('d', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -357,7 +310,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/e.wav'));
-                  _addNote(Note('E', 4, 4, 0));
+                  _addNote(Note('e', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -365,8 +318,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/1.mp3'));
-                  _addNote(Note("F", 4, 4, 0));
+                  player.play(AssetSource('audio/f.wav'));
+                  _addNote(Note('f', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -374,8 +327,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/1.mp3'));
-                  _addNote(Note("F", 4, 4, 1));
+                  player.play(AssetSource('audio/fs.wav'));
+                  _addNote(Note('f', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -383,8 +336,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/1.mp3'));
-                  _addNote(Note("G", 4, 4, 0));
+                  player.play(AssetSource('audio/g.wav'));
+                  _addNote(Note('g', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -392,8 +345,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/1.mp3'));
-                  _addNote(Note("G", 4, 4, 1));
+                  player.play(AssetSource('audio/gs.wav'));
+                  _addNote(Note('g', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -401,8 +354,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/1.mp3'));
-                  _addNote(Note("A", 5, 4, 0));
+                  player.play(AssetSource('audio/a.wav'));
+                  _addNote(Note('a', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -410,8 +363,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/1.mp3'));
-                  _addNote(Note("A", 5, 4, 1));
+                  player.play(AssetSource('audio/as.wav'));
+                  _addNote(Note('a', 4, 4, 1));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -419,20 +372,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  player.play(AssetSource('audio/1.mp3'));
-                  _addNote(Note("B", 5, 4, 0));
+                  player.play(AssetSource('audio/b.wav'));
+                  _addNote(Note('b', 4, 4, 0));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('B'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  player.play(AssetSource('audio/1.mp3'));
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                child: const Text('♩'),
               ),
             ]),
           ],
