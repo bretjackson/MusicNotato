@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -8,11 +6,12 @@ void main() {
 }
 
 class Graphics extends CustomPainter {
-  bool note;
   String noteName;
   double x; // Current x-direction offset; determines positioning of note in the x-direction
+  List<String> noteList;
+  List<double> notePosition;
 
-  Graphics(this.note, this.noteName, this.x);
+  Graphics(this.noteName, this.x, this.noteList, this.notePosition);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -25,98 +24,84 @@ class Graphics extends CustomPainter {
     canvas.drawLine(Offset(0, size.height*0.6), Offset(size.width, size.height*0.6), paint);
     canvas.drawLine(Offset(0, size.height*0.7), Offset(size.width, size.height*0.7), paint);
 
-    if(note == true && noteName =='c') {
-      double y = -28; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(-radius+x,size.height+y),Offset(-radius+x,size.height*0.5-0.7*y),paint);
-    }
-    else if(note == true && noteName =='cs') {
-      double y = -28; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(-radius+x,size.height+y),Offset(-radius+x,size.height*0.5-0.7*y),paint);
-    }
-    else if(note == true && noteName =='d') {
-      double y = -30; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(-radius+x,size.height+y),Offset(-radius+x,size.height*0.5-0.5*y),paint);
-    }
-    else if(note == true && noteName =='ds') {
-      double y = -30; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(-radius+x,size.height+y),Offset(-radius+x,size.height*0.5-0.5*y),paint);
-    }
-    else if(note == true && noteName =='e') {
-      double y = -32; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(-radius+x,size.height+y),Offset(-radius+x,size.height*0.5-0.4*y),paint);
-    }
-    else if(note == true && noteName =='f') {
-      double y = -34.5; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(-radius+x,size.height+y),Offset(-radius+x,size.height*0.5-0.3*y),paint);
-    }
-    else if(note == true && noteName =='fs') {
-      double y = -34.5; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(-radius+x,size.height+y),Offset(-radius+x,size.height*0.5-0.3*y),paint);
-    }
-    else if(note == true && noteName =='g') { // correct
-      double y = -38; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(-radius+x,size.height+y),Offset(-radius+x,size.height*0.5-0.2*y),paint);
-    }
-    else if(note == true && noteName =='gs') {
-      double y = -20; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(radius+x,size.height+y),Offset(radius+x,size.height*0.5+0.8*y),paint);
-    }
-    else if(note == true && noteName =='a') {
-      double y = -22; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(radius+x,size.height+y),Offset(radius+x,size.height*0.5+0.8*y),paint);
-    }
-    else if(note == true && noteName =='as') {
-      double y = -22; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(radius+x,size.height+y),Offset(radius+x,size.height*0.5+0.8*y),paint);
-    }
-    else if(note == true && noteName =='b') {
-      double y = -24.5; // Current y-direction offset; determines note
-    
-      canvas.drawCircle(Offset(x,size.height+y), radius, paint);
-      canvas.drawLine(Offset(radius+x,size.height+y),Offset(radius+x,size.height*0.5+0.8*y),paint);
+    // for(String note in noteList) {
+    for(int i = 0; i < noteList.length; i++) {
+      double xPosition = notePosition[i];
+      if(noteList[i] =='c') {
+        double y = -28; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.7*y),paint);
+      }
+      else if(noteList[i] =='cs') {
+        double y = -28; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.7*y),paint);
+      }
+      else if(noteList[i] =='d') {
+        double y = -30; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.5*y),paint);
+      }
+      else if(noteList[i] =='ds') {
+        double y = -30; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.5*y),paint);
+      }
+      else if(noteList[i] =='e') {
+        double y = -32; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.4*y),paint);
+      }
+      else if(noteList[i] =='f') {
+        double y = -34.5; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.3*y),paint);
+      }
+      else if(noteList[i] =='fs') {
+        double y = -34.5; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.3*y),paint);
+      }
+      else if(noteList[i] =='g') { // correct
+        double y = -38; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.2*y),paint);
+      }
+      else if(noteList[i] =='gs') {
+        double y = -20; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(radius+xPosition,size.height+y),Offset(radius+xPosition,size.height*0.5+0.8*y),paint);
+      }
+      else if(noteList[i] =='a') {
+        double y = -22; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(radius+xPosition,size.height+y),Offset(radius+xPosition,size.height*0.5+0.8*y),paint);
+      }
+      else if(noteList[i] =='as') {
+        double y = -22; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(radius+xPosition,size.height+y),Offset(radius+xPosition,size.height*0.5+0.8*y),paint);
+      }
+      else if(noteList[i] =='b') {
+        double y = -24.5; // Current y-direction offset; determines note
+      
+        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
+        canvas.drawLine(Offset(radius+xPosition,size.height+y),Offset(radius+xPosition,size.height*0.5+0.8*y),paint);
+      }
     }
   }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class StaffLine extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var paint = Paint()..color = Colors.black..strokeWidth = 1.0;
-    
-    canvas.drawLine(Offset(0, size.height*0.3), Offset(size.width, size.height*0.3), paint);
-    canvas.drawLine(Offset(0, size.height*0.4), Offset(size.width, size.height*0.4), paint);
-    canvas.drawLine(Offset(0, size.height*0.5), Offset(size.width, size.height*0.5), paint);
-    canvas.drawLine(Offset(0, size.height*0.6), Offset(size.width, size.height*0.6), paint);
-    canvas.drawLine(Offset(0, size.height*0.7), Offset(size.width, size.height*0.7), paint);
-  }
-  
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
@@ -148,16 +133,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-    bool note = false;
     String noteName = '';
     double x = 20;
+    List<String> noteList = [];
+    List<double> notePosition = [];
+
     final player = AudioPlayer();
 
     void _addNote(String currentNote) {
       setState(() {
-        note = true;
         noteName = currentNote;
-        x +=8 ;
+        noteList.add(noteName);
+        notePosition.add(x+15);
+        x+=15;
       });
     }
 
@@ -174,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
               CustomPaint(
                 size: const Size(1000, 50),
                 // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-                painter: Graphics(note, noteName, x),
+                painter: Graphics(noteName, x, noteList, notePosition),
               ),
             ButtonBar(
               children: <Widget>[
