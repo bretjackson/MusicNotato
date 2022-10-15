@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class Graphics extends CustomPainter {
@@ -13,89 +15,136 @@ class Graphics extends CustomPainter {
     var paint = Paint()
       ..color = Colors.black
       ..strokeWidth = 1.0;
-    double radius = 3;
+    double x = size.height/4;
 
-    // draws the staff
-    canvas.drawLine(Offset(0, size.height * 0.3), Offset(size.width, size.height * 0.3), paint);
-    canvas.drawLine(Offset(0, size.height * 0.4), Offset(size.width, size.height * 0.4), paint);
-    canvas.drawLine(Offset(0, size.height * 0.5), Offset(size.width, size.height * 0.5), paint);
-    canvas.drawLine(Offset(0, size.height * 0.6), Offset(size.width, size.height * 0.6), paint);
-    canvas.drawLine(Offset(0, size.height * 0.7), Offset(size.width, size.height * 0.7), paint);
+    // Draws the staff
+    canvas.drawLine(Offset(0, 0), Offset(size.width, 0), paint);
+    canvas.drawLine(Offset(0, x), Offset(size.width, x), paint);
+    canvas.drawLine(Offset(0, 2*x), Offset(size.width, 2*x), paint);
+    canvas.drawLine(Offset(0, 3*x), Offset(size.width, 3*x), paint);
+    canvas.drawLine(Offset(0, 4*x), Offset(size.width, 4*x), paint);
 
-    // for(String note in noteList) {
     for(int i = 0; i < noteList.length; i++) {
       double xPosition = notePosition[i];
       if(noteList[i] =='c') {
-        double y = -28; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.7*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, 1.5*x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore();
+        canvas.drawLine(Offset(xPosition+0.7*x, 1.5*x), Offset(xPosition+0.7*x, 5*x), paint); 
       }
       else if(noteList[i] =='cs') {
-        double y = -28; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.7*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, 1.5*x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+0.7*x, 1.5*x), Offset(xPosition+0.7*x, 5*x), paint); 
       }
       else if(noteList[i] =='d') {
-        double y = -30; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.5*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+0.5*x, x), Offset(xPosition+0.5*x, 4.5*x), paint); 
       }
       else if(noteList[i] =='ds') {
-        double y = -30; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.5*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+0.5*x, x), Offset(xPosition+0.5*x, 4.5*x), paint); 
       }
       else if(noteList[i] =='e') {
-        double y = -32; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.4*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, 0.5*x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+0.35*x, 0.5*x), Offset(xPosition+0.35*x, 4*x), paint);  
       }
       else if(noteList[i] =='f') {
-        double y = -34.5; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.3*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, -0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+0.15*x, 0), Offset(xPosition+0.15*x, 3.5*x), paint); 
       }
       else if(noteList[i] =='fs') {
-        double y = -34.5; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.3*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, -0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+0.15*x, 0), Offset(xPosition+0.15*x, 3.5*x), paint); 
       }
       else if(noteList[i] =='g') { // correct
-        double y = -38; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(-radius+xPosition,size.height+y),Offset(-radius+xPosition,size.height*0.5-0.2*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, 3*x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+2.5*x, 3*x), Offset(xPosition+2.5*x, -0.5*x), paint); 
       }
       else if(noteList[i] =='gs') {
-        double y = -20; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(radius+xPosition,size.height+y),Offset(radius+xPosition,size.height*0.5+0.8*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, 3*x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+2.5*x, 3*x), Offset(xPosition+2.5*x, -0.5*x), paint); 
       }
       else if(noteList[i] =='a') {
-        double y = -22; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(radius+xPosition,size.height+y),Offset(radius+xPosition,size.height*0.5+0.8*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, 2.5*x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+2.3*x, 2.5*x), Offset(xPosition+2.3*x, -x), paint); 
       }
       else if(noteList[i] =='as') {
-        double y = -22; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(radius+xPosition,size.height+y),Offset(radius+xPosition,size.height*0.5+0.8*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, 2.5*x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+2.3*x, 2.5*x), Offset(xPosition+2.3*x, -x), paint);
       }
       else if(noteList[i] =='b') {
-        double y = -24.5; // Current y-direction offset; determines note
-      
-        canvas.drawCircle(Offset(xPosition,size.height+y), radius, paint);
-        canvas.drawLine(Offset(radius+xPosition,size.height+y),Offset(radius+xPosition,size.height*0.5+0.8*y),paint);
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, 2*x-0.15*x) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore(); 
+        canvas.drawLine(Offset(xPosition+2.2*x, 2*x), Offset(xPosition+2.2*x, -1.5*x), paint);
       }
     }
   }

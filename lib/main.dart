@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Note? currentNote;
     String currentNoteString = '';
     String noteName = '';
-    double x = 20;
+    double xPosition = 20;
     List<String> noteList = [];
     List<double> notePosition = [];
 
@@ -64,10 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       noteName = currentNote.note;
       noteList.add(noteName);
-      notePosition.add(x+15);
-      x += 15;
+      notePosition.add(xPosition+15);
+      xPosition += 40;
       _allNotes.add(currentNote);
-      print(noteList);
     });
   }
 
@@ -84,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
             CustomPaint(
               size: const Size(1000, 50),
               // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-              painter: Graphics(noteName, x, noteList, notePosition),
+              painter: Graphics(noteName, xPosition, noteList, notePosition),
             ),
             ButtonBar(children: <Widget>[
               ElevatedButton(
