@@ -45,8 +45,12 @@ class _MyHomePageState extends State<MyHomePage> {
     String currentNoteString = '';
     String noteName = '';
     double xPosition = 20;
-    List<String> noteList = [];
+    List<Note> noteList = [];
     List<double> notePosition = [];
+
+    double currentRhythm = 0;
+
+    String currentClef = 'treble';
 
     final player = AudioPlayer();
 
@@ -62,8 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addNote(Note currentNote) {
     setState(() {
-      noteName = currentNote.note;
-      noteList.add(noteName);
+      noteList.add(currentNote);
       notePosition.add(xPosition);
       xPosition += 40;
       _allNotes.add(currentNote);
@@ -83,8 +86,18 @@ class _MyHomePageState extends State<MyHomePage> {
             CustomPaint(
               size: const Size(1000, 50),
               // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-              painter: Graphics(noteName, xPosition, noteList, notePosition),
+              painter: Graphics(xPosition, noteList, notePosition, 'treble'),
             ),
+            ButtonBar(children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('Thirtysecond'),
+              )
+            ]),
             ButtonBar(children: <Widget>[
               ElevatedButton(
                 onPressed: () {
@@ -95,15 +108,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('C'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  player.play(AssetSource('audio/cs.wav'));
-                  _addNote(Note('c', 4, 4, 0, 1));
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                child: const Text('C#/Db'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     player.play(AssetSource('audio/cs.wav'));
+              //     _addNote(Note('c', 4, 4, 0, 1));
+              //   },
+              //   style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(Colors.black)),
+              //   child: const Text('C#/Db'),
+              // ),
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/d.wav'));
@@ -113,15 +126,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('D'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  player.play(AssetSource('audio/ds.wav'));
-                  _addNote(Note('d', 4, 4, 0, 1));
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                child: const Text('D#/Eb'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     player.play(AssetSource('audio/ds.wav'));
+              //     _addNote(Note('d', 4, 4, 0, 1));
+              //   },
+              //   style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(Colors.black)),
+              //   child: const Text('D#/Eb'),
+              // ),
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/e.wav'));
@@ -140,15 +153,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('F'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  player.play(AssetSource('audio/fs.wav'));
-                  _addNote(Note('f', 4, 4, 0, 1));
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                child: const Text('F#/Gb'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     player.play(AssetSource('audio/fs.wav'));
+              //     _addNote(Note('f', 4, 4, 0, 1));
+              //   },
+              //   style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(Colors.black)),
+              //   child: const Text('F#/Gb'),
+              // ),
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/g.wav'));
@@ -158,15 +171,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('G'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  player.play(AssetSource('audio/gs.wav'));
-                  _addNote(Note('g', 4, 4, 0, 1));
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                child: const Text('G#/Ab'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     player.play(AssetSource('audio/gs.wav'));
+              //     _addNote(Note('g', 4, 4, 0, 1));
+              //   },
+              //   style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(Colors.black)),
+              //   child: const Text('G#/Ab'),
+              // ),
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/a.wav'));
@@ -176,15 +189,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('A'),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  player.play(AssetSource('audio/as.wav'));
-                  _addNote(Note('a', 4, 4, 0, 1));
-                },
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.black)),
-                child: const Text('A#/Bb'),
-              ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     player.play(AssetSource('audio/as.wav'));
+              //     _addNote(Note('a', 4, 4, 0, 1));
+              //   },
+              //   style: ButtonStyle(
+              //       backgroundColor: MaterialStateProperty.all(Colors.black)),
+              //   child: const Text('A#/Bb'),
+              // ),
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/b.wav'));
