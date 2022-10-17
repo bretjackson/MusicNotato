@@ -48,7 +48,10 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Note> noteList = [];
     List<double> notePosition = [];
 
-    double currentRhythm = 0;
+    double duration = 0;
+    int octave = 4;
+    int dotted = 0;
+    int accidental = 0; // not implemented yet (when it is implemented, will also have to implement keys)
 
     String currentClef = 'treble';
 
@@ -89,14 +92,92 @@ class _MyHomePageState extends State<MyHomePage> {
               painter: Graphics(xPosition, noteList, notePosition, 'treble'),
             ),
             ButtonBar(children: <Widget>[
-              TextButton(
+              ElevatedButton(
                 onPressed: () {
+                  duration = 32;
+                  // print(duration);
+                },
+                style: ButtonStyle(
+                  // backgroundColor: MaterialStateProperty.all(Colors.black)),
+                  // disabledForegroundColor: Colors.red,
+                  // backgroundColor: MaterialStateProperty.all(Colors.red),
+                  // overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                  //   (Set<MaterialState> states) {
+                  //     if(states.contains(MaterialState.selected)) 
+                  //       return Colors.blue;
+                  //     return null;
+                  //   },
+                  // ),
+                  backgroundColor: MaterialStateProperty.resolveWith((states) {
+                    if(states.contains(MaterialState.selected)) {
+                      return Colors.green;
+                    }
+                    return Colors.blue;
+                  }),
+                  // disabledBackgroundColor: Colors.green,
+                ),
+                // style: ElevatedButton.styleFrom(
+                //   // backgroundColor: Colors.black,
+                //   disabledBackgroundColor: Colors.red,
+                //   disabledForegroundColor: Colors.green, 
+                // ),
+                child: const Text('Thirtysecond'),
+              ), 
+              ElevatedButton(
+                onPressed: () {
+                  duration = 16;
+                  // print(duration);
+                  setState(() {
+                    if(duration == 16) {
+                      ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      );
+                    }
+                    ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    );
+                  });
                   
+                },
+                style: ElevatedButton.styleFrom(
+                  // backgroundColor: MaterialStateProperty.all(Colors.green)),
+                  backgroundColor: Colors.red,
+                  // disabledForegroundColor: Colors.green,
+                ),
+                child: const Text('Sixteenth'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  duration = 8;
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.black)),
-                child: const Text('Thirtysecond'),
-              )
+                child: const Text('Eighth'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  duration = 4;
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('Quarter'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  duration = 2;
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('Half'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  duration = 1;
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+                child: const Text('Whole'),
+              ),
             ]),
             ButtonBar(children: <Widget>[
               ElevatedButton(
