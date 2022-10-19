@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'Graphics.dart';
@@ -9,7 +10,14 @@ import 'PlayingPage.dart';
 import 'Save.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //https://mightytechno.com/screen-orientation-in-flutter/
+  SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight])
+      .then((_) {
+    runApp(const MyApp());
+  });
 }
 
 Save save = Save();
@@ -48,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   List<Note> noteList = [];
   List<double> notePosition = [];
 
-  double duration = 0;
+  int duration = 0;
   int octave = 4;
   int dotted = 0;
   int accidental =
@@ -74,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
       notePosition.add(xPosition);
       xPosition += 40;
       _allNotes.add(currentNote);
+      print(xPosition);
     });
   }
 
@@ -183,7 +192,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/c.wav'));
-                  _addNote(Note('c', 4, 4, 0, 0));
+                  _addNote(Note('c', octave, duration, dotted, accidental));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -201,7 +210,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/d.wav'));
-                  _addNote(Note('d', 4, 4, 0, 0));
+                  _addNote(Note('d', octave, duration, dotted, accidental));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -219,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/e.wav'));
-                  _addNote(Note('e', 4, 4, 0, 0));
+                  _addNote(Note('e', octave, duration, dotted, accidental));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -228,7 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/f.wav'));
-                  _addNote(Note('f', 4, 4, 0, 0));
+                  _addNote(Note('f', octave, duration, dotted, accidental));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -246,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/g.wav'));
-                  _addNote(Note('g', 4, 4, 0, 0));
+                  _addNote(Note('g', octave, duration, dotted, accidental));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -264,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/a.wav'));
-                  _addNote(Note('a', 4, 4, 0, 0));
+                  _addNote(Note('a', octave, duration, dotted, accidental));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
@@ -282,7 +291,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ElevatedButton(
                 onPressed: () {
                   player.play(AssetSource('audio/b.wav'));
-                  _addNote(Note('b', 4, 4, 0, 0));
+                  _addNote(Note('b', octave, duration, dotted, accidental));
                 },
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
