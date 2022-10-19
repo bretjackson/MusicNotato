@@ -110,18 +110,53 @@ class Graphics extends CustomPainter {
     double x = size.height/4;
 
     // Draws the staff
+    canvas.drawLine(Offset(0, -2*x), Offset(size.width, -2*x), paint);
+    canvas.drawLine(Offset(0, -x), Offset(size.width, -x), paint);
     canvas.drawLine(Offset(0, 0), Offset(size.width, 0), paint);
     canvas.drawLine(Offset(0, x), Offset(size.width, x), paint);
     canvas.drawLine(Offset(0, 2*x), Offset(size.width, 2*x), paint);
-    canvas.drawLine(Offset(0, 3*x), Offset(size.width, 3*x), paint);
-    canvas.drawLine(Offset(0, 4*x), Offset(size.width, 4*x), paint);
 
     for(int i = 0; i < noteList.length; i++) {
-      double xPosition = notePosition[i];
-      String noteName = noteList[i].note;
-
-      if(currentClef == 'treble') {
-        double position = calculatePosition(noteName, noteList[i].octave, currentClef);
+      Note currentNote = noteList[i];
+      double xPosition = notePosition[i]; // x-coordinate of the note to be drawn
+      // String noteName = noteList[i].note; // name of the current note
+      double position = calculatePosition(currentNote.note, noteList[i].octave, currentClef); // position of the current note on the staff
+      double y = -position*x; // y-coordinate of the note to be drawn
+      // int duration = noteList[i].duration; // length of the current note
+      // int dotted = noteList[i].dotted; // whether the note is dotted or not
+      if(currentNote.duration == 1 || currentNote.duration == 2) {
+        paint = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.0;
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, y-2) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition,0);
+        canvas.restore();
+        // canvas.drawLine(Offset(xPosition+0.6*x, y), Offset(xPosition+0.6*x, y-3.5), paint); 
+        // canvas.save();
+        // canvas.translate(xPosition,0);
+        // canvas.rotate(-20*(pi/180));
+        // Rect noteHead = Offset(0, y) & Size((748/512)*x, x);
+        // canvas.drawOval(noteHead, paint);
+        // canvas.translate(-xPosition,0);
+        // canvas.restore();
+        canvas.drawLine(Offset(xPosition-position*0.317*x+1.6*x, y), Offset(xPosition-position*0.317*x+1.6*x, y-3.5*x), paint); 
+      }
+      else {
+        paint = Paint()
+        ..style = PaintingStyle.fill
+        ..strokeWidth = 2.0;
+        canvas.save();
+        canvas.translate(xPosition,0);
+        canvas.rotate(-20*(pi/180));
+        Rect noteHead = Offset(0, y-2) & Size((748/512)*x, x);
+        canvas.drawOval(noteHead, paint);
+        canvas.translate(-xPosition+40,0);
+        canvas.restore();
+        canvas.drawLine(Offset(xPosition-position*0.3*x+1.6*x, y), Offset(xPosition-position*0.3*x+1.6*x, y-3.5*x), paint); 
       }
     }
 
