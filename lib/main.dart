@@ -73,7 +73,6 @@ class _MyHomePageState extends State<MyHomePage> {
       notePosition.add(xPosition);
       xPosition += 40;
       _allNotes.add(currentNote);
-      print(xPosition);
     });
   }
 
