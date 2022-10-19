@@ -41,21 +41,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-    Note? currentNote;
-    String currentNoteString = '';
-    String noteName = '';
-    double xPosition = 20;
-    List<Note> noteList = [];
-    List<double> notePosition = [];
+  Note? currentNote;
+  String currentNoteString = '';
+  String noteName = '';
+  double xPosition = 20;
+  List<Note> noteList = [];
+  List<double> notePosition = [];
 
-    double duration = 0;
-    int octave = 4;
-    int dotted = 0;
-    int accidental = 0; // not implemented yet (when it is implemented, will also have to implement keys)
+  double duration = 0;
+  int octave = 4;
+  int dotted = 0;
+  int accidental =
+      0; // not implemented yet (when it is implemented, will also have to implement keys)
 
-    String currentClef = 'treble';
+  String currentClef = 'treble';
 
-    final player = AudioPlayer();
+  final player = AudioPlayer();
 
   @override
   void initState() {
@@ -103,13 +104,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   // backgroundColor: MaterialStateProperty.all(Colors.red),
                   // overlayColor: MaterialStateProperty.resolveWith<Color?>(
                   //   (Set<MaterialState> states) {
-                  //     if(states.contains(MaterialState.selected)) 
+                  //     if(states.contains(MaterialState.selected))
                   //       return Colors.blue;
                   //     return null;
                   //   },
                   // ),
                   backgroundColor: MaterialStateProperty.resolveWith((states) {
-                    if(states.contains(MaterialState.selected)) {
+                    if (states.contains(MaterialState.selected)) {
                       return Colors.green;
                     }
                     return Colors.blue;
@@ -119,16 +120,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 // style: ElevatedButton.styleFrom(
                 //   // backgroundColor: Colors.black,
                 //   disabledBackgroundColor: Colors.red,
-                //   disabledForegroundColor: Colors.green, 
+                //   disabledForegroundColor: Colors.green,
                 // ),
                 child: const Text('Thirtysecond'),
-              ), 
+              ),
               ElevatedButton(
                 onPressed: () {
                   duration = 16;
                   // print(duration);
                   setState(() {
-                    if(duration == 16) {
+                    if (duration == 16) {
                       ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                       );
@@ -137,7 +138,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       backgroundColor: Colors.red,
                     );
                   });
-                  
                 },
                 style: ElevatedButton.styleFrom(
                   // backgroundColor: MaterialStateProperty.all(Colors.green)),
@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   duration = 8;
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('Eighth'),
               ),
               ElevatedButton(
@@ -159,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   duration = 4;
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('Quarter'),
               ),
               ElevatedButton(
@@ -167,7 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   duration = 2;
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('Half'),
               ),
               ElevatedButton(
@@ -175,7 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   duration = 1;
                 },
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.black)),
+                    backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('Whole'),
               ),
             ]),
@@ -293,6 +293,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(3),
+            side: BorderSide(color: Color.fromARGB(255, 124, 24, 157))),
         onPressed: () {
           Navigator.push(
             context,
