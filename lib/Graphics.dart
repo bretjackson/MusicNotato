@@ -119,12 +119,11 @@ class Graphics extends CustomPainter {
     for(int i = 0; i < noteList.length; i++) {
       Note currentNote = noteList[i];
       double xPosition = notePosition[i]; // x-coordinate of the note to be drawn
-      // String noteName = noteList[i].note; // name of the current note
       double position = calculatePosition(currentNote.note, noteList[i].octave, currentClef); // position of the current note on the staff
+      print(position);
       double y = -position*x; // y-coordinate of the note to be drawn
-      // int duration = noteList[i].duration; // length of the current note
-      // int dotted = noteList[i].dotted; // whether the note is dotted or not
-      if(currentNote.duration == 1 || currentNote.duration == 2) {
+
+      if(currentNote.duration == 1 || currentNote.duration == 2) { // draws an untilled notehead (notehead for whole and half notes)
         paint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2.0;
@@ -135,17 +134,8 @@ class Graphics extends CustomPainter {
         canvas.drawOval(noteHead, paint);
         canvas.translate(-xPosition,0);
         canvas.restore();
-        // canvas.drawLine(Offset(xPosition+0.6*x, y), Offset(xPosition+0.6*x, y-3.5), paint); 
-        // canvas.save();
-        // canvas.translate(xPosition,0);
-        // canvas.rotate(-20*(pi/180));
-        // Rect noteHead = Offset(0, y) & Size((748/512)*x, x);
-        // canvas.drawOval(noteHead, paint);
-        // canvas.translate(-xPosition,0);
-        // canvas.restore();
-        canvas.drawLine(Offset(xPosition-position*0.317*x+1.6*x, y), Offset(xPosition-position*0.317*x+1.6*x, y-3.5*x), paint); 
       }
-      else {
+      else { // draws a filled notehead (notehead for all other notes)
         paint = Paint()
         ..style = PaintingStyle.fill
         ..strokeWidth = 2.0;
@@ -156,133 +146,52 @@ class Graphics extends CustomPainter {
         canvas.drawOval(noteHead, paint);
         canvas.translate(-xPosition+40,0);
         canvas.restore();
-        canvas.drawLine(Offset(xPosition-position*0.3*x+1.6*x, y), Offset(xPosition-position*0.3*x+1.6*x, y-3.5*x), paint); 
+      }
+      if(currentNote.duration != 1) {
+        var stemEndX;
+        var stemEndY;
+        if(position > 0) { // draws a stem going down
+          stemEndX = xPosition-position*0.35*x+1.6*x-(748/512)*x;
+          stemEndY = y+3.5*x;
+          canvas.drawLine(Offset(xPosition-position*0.35*x+1.6*x-(748/512)*x, y), Offset(xPosition-position*0.35*x+1.6*x-(748/512)*x, y+3.5*x), paint); 
+        } // draws a stem going up
+        else {
+          stemEndX = xPosition-position*0.317*x+1.6*x;
+          stemEndY = y-3.5*x;
+          canvas.drawLine(Offset(xPosition-position*0.317*x+1.6*x, y), Offset(xPosition-position*0.317*x+1.6*x, y-3.5*x), paint); 
+        }
+        if(currentNote.duration != 4) {
+          if(position > 0) {
+            canvas.drawLine(Offset(stemEndX,stemEndY), Offset(stemEndX+x,stemEndY-1.5*x), paint);
+          }
+          else {
+            canvas.drawLine(Offset(stemEndX,stemEndY), Offset(stemEndX+x,stemEndY+1.5*x), paint);
+          }
+          if(currentNote.duration != 8) {
+            if(position > 0) {
+            canvas.drawLine(Offset(stemEndX,stemEndY-0.5*x), Offset(stemEndX+x,stemEndY-2*x), paint);
+            }
+            else {
+              canvas.drawLine(Offset(stemEndX,stemEndY+0.5*x), Offset(stemEndX+x,stemEndY+2*x), paint);
+            }
+            if(currentNote.duration != 16) {
+              if(position > 0) {
+                canvas.drawLine(Offset(stemEndX,stemEndY-x), Offset(stemEndX+x,stemEndY-2.5*x), paint);
+              }
+              else {
+                canvas.drawLine(Offset(stemEndX,stemEndY+x), Offset(stemEndX+x,stemEndY+2.5*x), paint);
+              }
+            }
+          }
+        }
+      }
+      if(currentNote.dotted == 1) {
+        canvas.drawCircle(Offset(xPosition + 1.75*x, y), 0.15*x, paint);
+      }
+      if(position > 2.5 || position < -2.5) {
+        canvas.drawLine(Offset(xPosition-1.25*x, y+0.3*x), Offset(xPosition+0.75*x, y+0.3*x), paint);
       }
     }
-
-    // for(int i = 0; i < noteList.length; i++) {
-    //   double xPosition = notePosition[i];
-    //   if(noteList[i] =='c') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, 1.5*x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore();
-    //     canvas.drawLine(Offset(xPosition+0.7*x, 1.5*x), Offset(xPosition+0.7*x, 5*x), paint); 
-    //   }
-    //   else if(noteList[i] =='cs') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, 1.5*x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+0.7*x, 1.5*x), Offset(xPosition+0.7*x, 5*x), paint); 
-    //   }
-    //   else if(noteList[i] =='d') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+0.5*x, x), Offset(xPosition+0.5*x, 4.5*x), paint); 
-    //   }
-    //   else if(noteList[i] =='ds') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+0.5*x, x), Offset(xPosition+0.5*x, 4.5*x), paint); 
-    //   }
-    //   else if(noteList[i] =='e') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, 0.5*x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+0.35*x, 0.5*x), Offset(xPosition+0.35*x, 4*x), paint);  
-    //   }
-    //   else if(noteList[i] =='f') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, -0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+0.15*x, 0), Offset(xPosition+0.15*x, 3.5*x), paint); 
-    //   }
-    //   else if(noteList[i] =='fs') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, -0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+0.15*x, 0), Offset(xPosition+0.15*x, 3.5*x), paint); 
-    //   }
-    //   else if(noteList[i] =='g') { // correct
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, 3*x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+2.5*x, 3*x), Offset(xPosition+2.5*x, -0.5*x), paint); 
-    //   }
-    //   else if(noteList[i] =='gs') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, 3*x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+2.5*x, 3*x), Offset(xPosition+2.5*x, -0.5*x), paint); 
-    //   }
-    //   else if(noteList[i] =='a') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, 2.5*x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+2.3*x, 2.5*x), Offset(xPosition+2.3*x, -x), paint); 
-    //   }
-    //   else if(noteList[i] =='as') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, 2.5*x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+2.3*x, 2.5*x), Offset(xPosition+2.3*x, -x), paint);
-    //   }
-    //   else if(noteList[i] =='b') {
-    //     canvas.save();
-    //     canvas.translate(xPosition,0);
-    //     canvas.rotate(-20*(pi/180));
-    //     Rect noteHead = Offset(0, 2*x-0.15*x) & Size((748/512)*x, x);
-    //     canvas.drawOval(noteHead, paint);
-    //     canvas.translate(-xPosition,0);
-    //     canvas.restore(); 
-    //     canvas.drawLine(Offset(xPosition+2.2*x, 2*x), Offset(xPosition+2.2*x, -1.5*x), paint);
-    //   }
-    // }
   }
 
   @override
