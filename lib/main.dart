@@ -195,6 +195,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   _addNote(Note('c', octave, duration, dotted, accidental));
                 },
                 style: ButtonStyle(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(3),
+                      side: BorderSide(
+                        color: Color.fromARGB(255, 124, 24, 157),
+                      ),
+                    ),
                     backgroundColor: MaterialStateProperty.all(Colors.black)),
                 child: const Text('C'),
               ),
