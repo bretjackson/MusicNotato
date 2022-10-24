@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'Graphics.dart';
 import 'Note.dart';
 import 'PlayingPage.dart';
-import 'Save.dart';
+import 'save.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -71,17 +71,24 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     widget.storage.readFile().then((value) {
       setState(() {
-        _allNotes = value;
+        for (dynamic fakeNote in value) {
+          Note note = Note(fakeNote['note'], fakeNote['octave'],
+              fakeNote['duration'], fakeNote['dotted'], fakeNote['accidental']);
+          _addNote(note, saveOnAdd: false);
+        }
       });
     });
   }
 
-  void _addNote(Note currentNote) {
+  void _addNote(Note currentNote, {bool saveOnAdd = true}) {
     setState(() {
       noteList.add(currentNote);
       notePosition.add(xPosition);
       xPosition += 40;
       _allNotes.add(currentNote);
+      if (saveOnAdd) {
+        save.writeFile(_allNotes);
+      }
       print(xPosition);
     });
   }

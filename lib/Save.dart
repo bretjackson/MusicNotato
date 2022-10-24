@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -7,32 +8,40 @@ import 'Note.dart';
 import 'PlayingPage.dart';
 
 class Save {
-
   List<Note> _allNotes = List.empty(growable: true);
+  final JsonEncoder encoder = JsonEncoder();
+  final JsonDecoder decoder = JsonDecoder();
 
-  Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
+  Future<String?> get _localPath async {
+    //TODO: Change this to be the commented out version. I can't access that
+    //to look at the file for testing, which is why it's commented out, but it
+    //straight up won't work on iOS. Also remove the question marks
+    //final directory = await getApplicationDocumentsDirectory();
+    final directory = await getExternalStorageDirectory();
+    return directory?.path;
   }
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/notato.txt');
+    print('PATH: $path');
+    return File('$path/notato_dotata.json');
   }
 
-  Future<List<Note>> readFile() async {
+  Future<List<dynamic>> readFile() async {
     try {
       final file = await _localFile;
       final String notesFromFile = await file.readAsString();
-      return strToNoteList(notesFromFile);
+      final toReturn = jsonDecode(notesFromFile);
+      return toReturn;
     } catch (e) {
       return List.empty(growable: true);
     }
   }
 
-  Future<File> writeFile() async {
+  Future<File> writeFile(List<Note> notesToSave) async {
+    _allNotes = notesToSave;
     final file = await _localFile;
-    return file.writeAsString(noteListToStr(_allNotes));
+    return file.writeAsString(encoder.convert(_allNotes));
   }
 
   List<Note> strToNoteList(String fileText) {
@@ -48,12 +57,11 @@ class Save {
         chunk = '';
         //TODO: Make it so this won't break if the number of characters isn't constant
         toReturn.add(Note(
-          noteParts[0],
-          int.parse(noteParts[1]),
-          int.parse(noteParts[2]),
-          int.parse(noteParts[3]),
-          int.parse(noteParts[4])
-        ));
+            noteParts[0],
+            int.parse(noteParts[1]),
+            int.parse(noteParts[2]),
+            int.parse(noteParts[3]),
+            int.parse(noteParts[4])));
       }
     }
     return toReturn;
@@ -63,7 +71,7 @@ class Save {
     String toReturn = '';
     for (Note note in noteList) {
       toReturn =
-          '$toReturn${note.note}${note.octave}${note.duration}${note.accidental};';
+          '$toReturn.${note.note}.${note.octave}.${note.duration}.${note.accidental};';
     }
     return toReturn;
   }

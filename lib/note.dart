@@ -15,8 +15,23 @@ class Note {
 
   Note(this.note, this.octave, this.duration, this.dotted, this.accidental);
   Note.rest(this.duration)
-      : note = "r",
+      : note = 'r',
         accidental = 0,
         octave = 0,
         dotted = 0;
+
+  Note.fromJson(Map<String, dynamic> json)
+      : note = json['note'],
+        octave = json['octave'],
+        duration = json['duration'],
+        accidental = json['accidental'],
+        dotted = json['dotted'];
+
+  Map<String, dynamic> toJson() => {
+        'note': note,
+        'octave': octave,
+        'duration': duration,
+        'accidental': accidental,
+        'dotted': dotted,
+      };
 }
