@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'Graphics.dart';
-import 'note.dart';
+import 'Note.dart';
 import 'PlayingPage.dart';
 import 'Save.dart';
 
