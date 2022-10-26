@@ -21,7 +21,7 @@ void main() {
 }
 
 Save save = Save();
-List<Note> _allNotes = save.getAllNotes();
+List<Note> _allNotes = save.getAllNotes().cast<Note>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
