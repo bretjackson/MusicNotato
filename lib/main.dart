@@ -5,9 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'Graphics.dart';
-import 'Note.dart';
+import 'note.dart';
 import 'PlayingPage.dart';
-import 'save.dart';
+import 'Save.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,15 +70,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final player = AudioPlayer();
 
-
   @override
   void initState() {
     super.initState();
     widget.storage.readFile().then((value) {
       setState(() {
         for (dynamic fakeNote in value) {
-          Note note = Note(fakeNote['note'], fakeNote['octave'],
-              fakeNote['duration'], fakeNote['dotted'], fakeNote['accidental'], fakeNote['complete']);
+          Note note = Note(
+              fakeNote['note'],
+              fakeNote['octave'],
+              fakeNote['duration'],
+              fakeNote['dotted'],
+              fakeNote['accidental'],
+              fakeNote['complete']);
           _addNote(note, saveOnAdd: false);
         }
       });
@@ -130,7 +134,13 @@ class _MyHomePageState extends State<MyHomePage> {
               child: CustomPaint(
                 size: const Size(1000, 50),
                 // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-                painter: Graphics(xPosition, _allNotes, notePosition, signature, signature_, 'treble',
+                painter: Graphics(
+                  xPosition,
+                  _allNotes,
+                  notePosition,
+                  signature,
+                  signature_,
+                  'treble',
                 ),
               ),
               onPointerDown: (event) => {
