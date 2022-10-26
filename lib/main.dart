@@ -53,7 +53,6 @@ class _MyHomePageState extends State<MyHomePage> {
   String currentNoteString = '';
   String noteName = '';
   double xPosition = 20;
-  List<Note> noteList = [];
   List<double> notePosition = [];
 
   String dropdownvalue = '4/4';
@@ -89,13 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
   double return_complete() {
     double duration_ = 1 / duration;
     double complete = 0;
-    if (noteList.isEmpty) {
+    if (_allNotes.isEmpty) {
       complete = duration_;
     } else {
-      if (noteList[noteList.length - 1].complete == signature / signature_) {
+      if (_allNotes[_allNotes.length - 1].complete == signature / signature_) {
         complete = duration_;
       } else {
-        complete = duration_ + noteList[noteList.length - 1].complete;
+        complete = duration_ + _allNotes[_allNotes.length - 1].complete;
       }
     }
     return complete;
@@ -103,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addNote(Note currentNote, {bool saveOnAdd = true}) {
     setState(() {
-      noteList.add(currentNote);
+      _allNotes.add(currentNote);
       notePosition.add(xPosition);
       xPosition += 40;
       _allNotes.add(currentNote);
@@ -131,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: CustomPaint(
                 size: const Size(1000, 50),
                 // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-                painter: Graphics(xPosition, noteList, notePosition, 'treble',
+                painter: Graphics(xPosition, _allNotes, notePosition, 'treble',
                     signature, signature_),
               ),
               onPointerDown: (event) => {
@@ -169,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 // After selecting the desired option,it will
                                 // change button value to selected value
                                 onChanged: (String? newValue) {
-                                  if (noteList.isEmpty) {
+                                  if (_allNotes.isEmpty) {
                                     state(() {
                                       dropdownvalue = newValue!;
                                       var str_li = dropdownvalue.split('/');
@@ -194,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //CustomPaint(
             //size: const Size(1000, 50),
             // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-            //painter: Graphics(xPosition, noteList, notePosition, 'treble'),
+            //painter: Graphics(xPosition, _allNotes, notePosition, 'treble'),
             // ),
             ButtonBar(children: <Widget>[
               ElevatedButton(
