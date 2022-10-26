@@ -13,19 +13,24 @@ class Note {
   // -2 is double flat, -1 is flat, 0 is natural, 1 is sharp, 2 is double sharp
   int accidental;
 
-  Note(this.note, this.octave, this.duration, this.dotted, this.accidental);
+
+  double complete;
+
+  Note(this.note, this.octave, this.duration, this.dotted, this.accidental, this.complete);
   Note.rest(this.duration)
       : note = 'r',
         accidental = 0,
         octave = 0,
-        dotted = 0;
+        dotted = 0,
+        complete = 0;
 
   Note.fromJson(Map<String, dynamic> json)
       : note = json['note'],
         octave = json['octave'],
         duration = json['duration'],
         accidental = json['accidental'],
-        dotted = json['dotted'];
+        dotted = json['dotted'],
+        complete = json['complete'];
 
   Map<String, dynamic> toJson() => {
         'note': note,
@@ -33,5 +38,6 @@ class Note {
         'duration': duration,
         'accidental': accidental,
         'dotted': dotted,
+        'complete': complete
       };
 }

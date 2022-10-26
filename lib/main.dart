@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         for (dynamic fakeNote in value) {
           Note note = Note(fakeNote['note'], fakeNote['octave'],
-              fakeNote['duration'], fakeNote['dotted'], fakeNote['accidental']);
+              fakeNote['duration'], fakeNote['dotted'], fakeNote['accidental'], fakeNote['complete']);
           _addNote(note, saveOnAdd: false);
         }
       });
@@ -130,8 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: CustomPaint(
                 size: const Size(1000, 50),
                 // size: Size(context.size!.width, context.size!.height), // does not work; compile error
-                painter: Graphics(xPosition, _allNotes, notePosition, 'treble',
-                    signature, signature_),
+                painter: Graphics(xPosition, _allNotes, notePosition, signature, signature_, 'treble',
+                ),
               ),
               onPointerDown: (event) => {
                 // when raised button is pressed
