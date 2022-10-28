@@ -123,7 +123,7 @@ class Graphics extends CustomPainter {
       print(position);
       double y = -position*x; // y-coordinate of the note to be drawn
 
-      if(currentNote.duration == 1 || currentNote.duration == 2) { // draws an untilled notehead (notehead for whole and half notes)
+      if(currentNote.duration == 1 || currentNote.duration == 2) { // draws an unfilled notehead (notehead for whole and half notes)
         paint = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 2.0;
@@ -160,7 +160,7 @@ class Graphics extends CustomPainter {
           stemEndY = y-3.5*x;
           canvas.drawLine(Offset(xPosition-position*0.317*x+1.6*x, y), Offset(xPosition-position*0.317*x+1.6*x, y-3.5*x), paint); 
         }
-        if(currentNote.duration != 4) {
+        if(currentNote.duration != 4 && currentNote.duration != 2) {
           if(position > 0) {
             canvas.drawLine(Offset(stemEndX,stemEndY), Offset(stemEndX+x,stemEndY-1.5*x), paint);
           }
@@ -189,7 +189,7 @@ class Graphics extends CustomPainter {
         canvas.drawCircle(Offset(xPosition + 1.75*x, y), 0.15*x, paint);
       }
       if(position > 2.5 || position < -2.5) {
-        canvas.drawLine(Offset(xPosition-1.25*x, y+0.3*x), Offset(xPosition+0.75*x, y+0.3*x), paint);
+        canvas.drawLine(Offset(xPosition+0.5*x, y-0.1*x), Offset(xPosition+3*x, y-0.1*x), paint);
       }
     }
   }
