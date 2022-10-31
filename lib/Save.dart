@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
-import 'Note.dart';
-import 'PlayingPage.dart';
+import 'package:MusicNotato/models/note.dart';
+import 'package:MusicNotato/screens/playing_page.dart';
 
 class Save {
   List<Note> _allNotes = List.empty(growable: true);
-  final JsonEncoder encoder = JsonEncoder();
-  final JsonDecoder decoder = JsonDecoder();
+  final JsonEncoder encoder = const JsonEncoder();
+  final JsonDecoder decoder = const JsonDecoder();
 
   Future<String?> get _localPath async {
     //TODO: Change this to be the commented out version. I can't access that

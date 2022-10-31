@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'Note.dart';
+import 'package:MusicNotato/models/note.dart';
 
 class Graphics extends CustomPainter {
   // String noteName;
@@ -18,8 +18,23 @@ class Graphics extends CustomPainter {
   List<double> altoBasePositions = [0,0.5,1,1.5,2,2.5,3];
   List<double> bassBasePositions = [3,3.5,4,4.5,5,5.5,6];
 
+  Map<String, Map<String, double>> noteToClefToBasePositions = <String, Map<String, double>>{
+    'c': {
+      'treble': -3,
+      'alto': 0,
+      'bass': 3
+    },
+    'd': {
+      'treble': -2.5,
+      'alto': 0.5,
+      'bass': 3.5
+    }
+    //TODO: complete me with the rest of the notes
+  };
+
   Graphics(this.x, this.noteList, this.notePosition, this.signature, this.signature_, this.currentClef);
 
+//TODO: replace with noteToClefToBasePositions
   double calculateBasePosition(String noteName, String currentClef) {
     if(noteName == 'c') {
       if(currentClef == 'treble') {
@@ -186,32 +201,14 @@ class Graphics extends CustomPainter {
       double y = -position*x; // y-coordinate of the note to be drawn
 
       if(currentNote.duration == 1 || currentNote.duration == 2) { // draws an untilled notehead (notehead for whole and half notes)
-        paint = Paint()
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.0;
-        canvas.save();
-        canvas.translate(xPosition,0);
-        canvas.rotate(-20*(pi/180));
-        Rect noteHead = Offset(0, y-2) & Size((748/512)*x, x);
-        canvas.drawOval(noteHead, paint);
-        canvas.translate(-xPosition,0);
-        canvas.restore();
+        paint = _drawNoteHead(paint, canvas, xPosition, y, x, false);
       }
       else { // draws a filled notehead (notehead for all other notes)
-        paint = Paint()
-        ..style = PaintingStyle.fill
-        ..strokeWidth = 2.0;
-        canvas.save();
-        canvas.translate(xPosition,0);
-        canvas.rotate(-20*(pi/180));
-        Rect noteHead = Offset(0, y-2) & Size((748/512)*x, x);
-        canvas.drawOval(noteHead, paint);
-        canvas.translate(-xPosition+40,0);
-        canvas.restore();
+        paint = _drawNoteHead(paint, canvas, xPosition, y, x, true);
       }
       if(currentNote.duration != 1) {
-        var stemEndX;
-        var stemEndY;
+        double stemEndX;
+        double stemEndY;
         if(position > 0) { // draws a stem going down
           stemEndX = xPosition-position*0.35*x+1.6*x-(748/512)*x;
           stemEndY = y+3.5*x;
@@ -254,6 +251,20 @@ class Graphics extends CustomPainter {
         canvas.drawLine(Offset(xPosition-1.25*x, y+0.3*x), Offset(xPosition+0.75*x, y+0.3*x), paint);
       }
     }
+  }
+
+  Paint _drawNoteHead(Paint paint, Canvas canvas, double xPosition, double y, double x, bool isFilled) {
+    paint = Paint()
+    ..style = isFilled? PaintingStyle.fill : PaintingStyle.stroke
+    ..strokeWidth = 2.0;
+    canvas.save();
+    canvas.translate(xPosition,0);
+    canvas.rotate(-20*(pi/180));
+    Rect noteHead = Offset(0, y-2) & Size((748/512)*x, x);
+    canvas.drawOval(noteHead, paint);
+    canvas.translate(-xPosition,0);
+    canvas.restore();
+    return paint;
   }
 
   @override
